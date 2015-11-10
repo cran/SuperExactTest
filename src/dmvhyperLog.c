@@ -24,13 +24,7 @@ logp:  return log probability
 		return;
 	}
 	for(i=0; i < aSize; i++) f1[i]=(double) 0;
-/*
-Recursive update dhyper(x,a,N-a,b):
- dhyper(x,a+1,N-a-1,b)=dhyper(x,a,N-a,b) * ((a+1)/(a+1-x)) * ((N-a-b+x) /(N-a))
- dhyper(x,a,N-a,b)=dhyper(x,a-1,N-a+1,b) * (a/(a-x)) * ((N-a+1-b+x) /(N-a+1))
- dhyper(x+1,a,N-a,b)=dhyper(x,a,N-a,b) * ((a-x)/(x+1)) * ((b-x) /(N-a-b+x+1))
- dhyper(x,a,N-a,b)=dhyper(x-1,a,N-a,b) * ((a-x+1)/x) * ((b-x+1) /(N-a-b+x))
-*/
+	*p=0;
 	//from inner-most to outer-most
 	for(i=1; i <= *nL - 1; i++){
 		if(i==1){
@@ -56,7 +50,6 @@ Recursive update dhyper(x,a,N-a,b):
 			continue;
 		}
 		//final integration
-		*p=0;
 		j=max2(*x,L[1]+L[0] - *n);
 		temp=C_dhyper_logVal(j,L[1],*n - L[1],L[0],i0,logVal);
 		*p += temp * f1[j - *x];

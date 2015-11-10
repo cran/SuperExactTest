@@ -1,4 +1,4 @@
-a78108ad9ae15709058473e369eabc08 *DESCRIPTION
+dbe8cc53534ab002e112768b19a6a363 *DESCRIPTION
 cfd62dd2f45a7e714f18ab0089883640 *NAMESPACE
 ddd283957fa1b63836015b13487b6f99 *R/MSET.R
 581b4bd5d8e01333ffffc4d5e83be5b3 *R/intersect.R
@@ -12,7 +12,7 @@ a65cd4139943a13f43b86ab88bf23224 *build/vignette.rds
 d0cd1dd4e18c14951b30af2a5c28a6ec *data/eqtls.RData
 ea7b5fe1c2dedae940e140000a48253a *inst/doc/set_html.R
 a8e6a6f1b049b2585ff8068d4dd97790 *inst/doc/set_html.Rmd
-4c9e51edce869b759265311f0b930b0b *inst/doc/set_html.html
+fd24175b48ac67506112a35ca9dbf1a4 *inst/doc/set_html.html
 827bdbc928949e996b91e37fa4206b92 *man/Cancer.Rd
 18c3298e0fac2cf759309aa7e02345b5 *man/GWAS.Rd
 f1e57df1b118faa91e888110f89c1797 *man/MSET.Rd
@@ -26,8 +26,8 @@ ef7d4b8579a57329c4b963317b72e75d *man/eqtls.Rd
 cb60c69bf51d700aa645a4db2fecf8a9 *man/supertest.Rd
 ee0f6474908f0190c21c830d3c47eb13 *src/binom.c
 a1c1f9080f5c2b662af371b963a5c197 *src/cmp.c
-21b0913945073b4bb5538c53003c7316 *src/dmvhyper.c
-835de520ad51cbc38df5908f7b61cb65 *src/dmvhyperLog.c
+a4c0979d1e8352a0f05c311176f42886 *src/dmvhyper.c
+2072322f3cf6d453d74aaa34e648cc3a *src/dmvhyperLog.c
 bf446922c5a39b37e2e13a6d392a42f1 *src/mvhyper.h
 b1736b2bfe7f64f6976557cb825b497d *src/pmvhyper.c
 a8e6a6f1b049b2585ff8068d4dd97790 *vignettes/set_html.Rmd

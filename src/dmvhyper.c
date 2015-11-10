@@ -24,6 +24,7 @@ logp:  return log probability
 		return;
 	}
 	for(i=0; i < aSize; i++) f1[i]=(double) 0;
+	*p=0;
 	//from inner-most to outer-most
 	for(i=1; i <= *nL - 1; i++){
 		if(i==1){
@@ -49,7 +50,6 @@ logp:  return log probability
 			continue;
 		}
 		//final integration
-		*p=0;
 		j=max2(*x,L[1]+L[0] - *n);
 		temp=C_dhyper(j,L[1],*n - L[1],L[0],i0);
 		*p += temp * f1[j - *x];
@@ -58,7 +58,6 @@ logp:  return log probability
 			*p += temp * f1[j - *x];
 		}
 	}
-	if(p<0) p=0;
 	if(*logp>0) *p = log(*p);
 	return;
 }
