@@ -7,10 +7,10 @@
 }
 \usage{
 \method{plot}{msets}(x, Layout=c('circular','landscape'), degree=NULL,
-	keep.empty.intersections=TRUE, sort.by=c('set','size','degree','p-value'),
+	keep.empty.intersections=TRUE,min.intersection.size=0, sort.by=c('set','size','degree','p-value'),
 	ylim=NULL, log.scale=FALSE, x.pos=c(0.05,0.95),
-	y.pos=c(0.025,0.975), yfrac=0.8, color.scale.pos=c(0.85, 0.9), 
-	legend.pos=c(0.85,0.25), legend.col=2, legend.text.cex=1, color.scale.cex=1, 
+	y.pos=c(0.025,0.975), yfrac=0.8, color.scale.pos=c(0.85, 0.9),
+	legend.pos=c(0.85,0.25), legend.col=2, legend.text.cex=1, color.scale.cex=1,
 	color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),
 	color.on='#2EFE64', color.off='#EEEEEE', show.overlap.size=TRUE,
 	show.set.size=TRUE, track.area.range=0.3, bar.area.range=0.2,
@@ -18,10 +18,11 @@
 	...)
 }
 \arguments{
- \item{x}{a \code{msets} object.} 
+ \item{x}{a \code{msets} object.}
  \item{Layout}{layout for plotting.}
  \item{degree}{a vector of intersection degrees for plotting. E.g., when \code{degree=c(2:3)}, only those intersections involving two or three sets will be plotted. By default, \code{degree=NULL}, all possible intersections are plotted.}
  \item{keep.empty.intersections}{logical; if \code{FALSE}, empty intersection(s) will be discarded to save plotting space.}
+ \item{min.intersection.size}{Minimum size of an intersection to be plotted. 0 by default.}
  \item{sort.by}{how to sort intersections. It is one of "\code{set}", "\code{size}", "\code{degree}", and "\code{p-value}".}
  \item{ylim}{the limits c(y1, y2) of plotting overlap size.}
  \item{log.scale}{logical; whether to plot with log transformed intersection sizes.}

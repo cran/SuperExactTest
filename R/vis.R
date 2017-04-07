@@ -2,7 +2,7 @@
 #Author: Minghui Wang
 #minghui.wang@mssm.edu
 #
-plot.msets=function(x,Layout=c('circular','landscape'),degree=NULL,keep.empty.intersections=TRUE,
+plot.msets=function(x,Layout=c('circular','landscape'),degree=NULL,keep.empty.intersections=TRUE,min.intersection.size=0,
 	sort.by=c('set','size','degree','p-value'),ylim=NULL,
 	log.scale=FALSE,x.pos=c(0.05,0.95),y.pos=c(0.025,0.975),yfrac=0.8,color.scale.pos=c(0.85, 0.9),legend.pos=c(0.85,0.25),legend.col=2,legend.text.cex=1,
 	color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),color.on='#2EFE64',color.off='#EEEEEE',
@@ -18,20 +18,20 @@ plot.msets=function(x,Layout=c('circular','landscape'),degree=NULL,keep.empty.in
 	}
 	sort.by = match.arg(sort.by)
 	if(Layout=='circular'){
-		return(plot.msets.circular(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,
+		return(plot.msets.circular(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,min.intersection.size=min.intersection.size,
 		sort.by=sort.by,ylim=ylim,log.scale=log.scale,color.scale.pos=color.scale.pos,legend.pos=legend.pos,
 		legend.col=legend.col,legend.text.cex=legend.text.cex,color.scale.cex=color.scale.cex,
 		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.overlap.size=show.overlap.size,
 		track.area.range=track.area.range,bar.area.range=bar.area.range,origin=origin,...))
 	}else if(Layout=='landscape'){
-		return(plot.msets.landscape(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,
+		return(plot.msets.landscape(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,min.intersection.size=min.intersection.size,
 		sort.by=sort.by,ylim=ylim,log.scale=log.scale,x.pos=x.pos,y.pos=y.pos,yfrac=yfrac,color.scale.pos=color.scale.pos,color.scale.cex=color.scale.cex,
 		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.set.size=show.set.size,...))
 	}else{
 		stop('Invalid Layout\n')
 	}
 }
-plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),ylim=NULL,
+plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,min.intersection.size=0,sort.by=c('set','size','degree','p-value'),ylim=NULL,
 	log.scale=FALSE,x.pos=c(0.05,1),y.pos=c(0,1),yfrac=0.8,color.scale.pos=c(0.85, 0.9),color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),
 	color.on='#2EFE64',color.off='#EEEEEE',show.set.size=TRUE,...){
 	#
@@ -46,7 +46,7 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 		heatmapColor = Args$heatmapColor
 	}
 	nColors=length(heatmapColor)-1
-	params=getPlotParams(x,nColors,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,ylim=ylim,log.scale=log.scale,Layout='landscape')
+	params=getPlotParams(x,nColors,degree=degree,keep.empty.intersections=keep.empty.intersections,min.intersection.size=min.intersection.size,sort.by=sort.by,ylim=ylim,log.scale=log.scale,Layout='landscape')
 	ylabel=params$ylabel
 	ylabel0=params$ylabel0
 	ylim=params$ylim
@@ -84,7 +84,7 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 	#sub canvas 1
 	vp1 <- viewport(x=x.pos[1]+(x.pos[2]-x.pos[1])/2, y=0.6, width=(x.pos[2]-x.pos[1]), height=yfrac)
 	pushViewport(vp1)
-	
+
 	yLen=1 #height of y axis
 	w=1/nO
 	h=yLen/(ylim[2]-ylim[1])
@@ -106,7 +106,7 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 #	pushViewport(vp1)
 #	grid.text(ylab,1, 0.5, just=c('center'), rot=90, gp=gpar(cex=cex.lab))
 #	upViewport()
-	
+
 	#color scale
 	if((!is.null(x$n)) & (! is.null(mlogp))){
 		if(is.character(color.scale.pos)){
@@ -171,7 +171,7 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 	upViewport()
 	return(invisible())
 }
-plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),
+plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,min.intersection.size=0,sort.by=c('set','size','degree','p-value'),
 	ylim=NULL,log.scale=FALSE,color.scale.pos=c(0.85, 0.9), legend.pos=c(0.85,0.25),legend.col=2,legend.text.cex=1,
 	color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),color.on='#2EFE64',color.off='#EEEEEE',
 	show.overlap.size=TRUE,track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},...){
@@ -193,7 +193,7 @@ plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by
 		heatmapColor = Args$heatmapColor
 	}
 	nColors=length(heatmapColor)-1
-	params=getPlotParams(x,nColors,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,ylim=ylim,log.scale=log.scale)
+	params=getPlotParams(x,nColors,degree=degree,keep.empty.intersections=keep.empty.intersections,min.intersection.size=min.intersection.size,sort.by=sort.by,ylim=ylim,log.scale=log.scale)
 	ylim=params$ylim
 	otab=params$otab
 	otab[otab>ylim[2]]=ylim[2]
@@ -224,7 +224,7 @@ plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by
 	grid.newpage()
 
 	#Plot tracks
-	
+
 	vp1 <- viewport(x=origin[1],y=origin[2],width=0.95, height=0.95)
 	pushViewport(vp1)
 	degreeUnit=2*pi/nO
@@ -355,7 +355,7 @@ getXY=function(origin,radius,degree){
 	Y=radius*sin(degree)
 	origin+c(X,Y)
 }
-getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),ylim=NULL,log.scale=FALSE,Layout=c('circular','landscape')){
+getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,min.intersection.size=0,sort.by=c('set','size','degree','p-value'),ylim=NULL,log.scale=FALSE,Layout=c('circular','landscape')){
 	Layout=match.arg(Layout)
 	sort.by = match.arg(sort.by)
 	otab=x$overlap.sizes
@@ -379,6 +379,10 @@ getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,so
 		otab=otab[otab.kept]
 	}else{
 		otab.kept=rep(T,length(otab))
+	}
+	if(min.intersection.size > 0){
+		otab.kept = otab>=min.intersection.size
+		otab=otab[otab.kept]
 	}
 	if(!is.null(degree)){
 		kpt=sapply(names(otab),function(d) countCharOccurrences('1',d)) %in% degree #sapply(strsplit(names(otab),''),function(d) sum(d == '1') %in% degree)
