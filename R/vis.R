@@ -249,7 +249,7 @@ plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,min.int
 			XY2=sapply(seq(degreeStart[i],degreeEnd[i]-degree.gap,length.out=40), function(deg) getXY(origin,(j+track.offset)*track.width-track.width*gap.between.track,deg))
 			pos.x <- c(XY1[1,],rev(XY2[1,]))
 			pos.y <- c(XY1[2,],rev(XY2[2,]))
-			grid.polygon(pos.x, pos.y,gp=gpar(col = 'black',fill=ifelse(which.set[j],color.on,color.off))) #
+			grid.polygon(pos.x, pos.y,gp=gpar(col = NA,fill=ifelse(which.set[j],color.on,color.off))) #
 		}
 		#bar plot intersection size
 		XY1=sapply(seq(degreeStart[i],degreeEnd[i]-degree.gap,length.out=40), function(deg) getXY(origin,width.sets,deg))
