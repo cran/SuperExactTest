@@ -1,8 +1,3 @@
-#include <R.h>
-#include <Rmath.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 #include "mvhyper.h"
 void C_dmvhyper(int *x, int *nL, int *L, int *n, double *p, int *logp){
 /*
@@ -58,6 +53,8 @@ logp:  return log probability
 			*p += temp * f1[j - *x];
 		}
 	}
+	if (*p > 1) *p = 1.0;
+	if ( *p < 0 ) *p = db_xmin;
 	if(*logp>0) *p = log(*p);
 	return;
 }

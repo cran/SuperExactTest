@@ -1,4 +1,4 @@
-useDynLib(SuperExactTest)
+useDynLib(SuperExactTest, .registration = TRUE)
 #exportPattern("^[[:alpha:]]+")
 import(methods)
 import(grid)
@@ -10,7 +10,13 @@ export(
 	jaccard,
 	intersect,
 	plot.msets,
-	union
+	union,
+	dpdiff,
+	cpdiff,
+	dpone,
+	cpone,
+	intersectElements,
+	deBarcode
 )
 S3method(print, msets)
 S3method(plot, msets)

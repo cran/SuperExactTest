@@ -58,6 +58,8 @@ logp:  return log probability
 			*p += temp * f1[j - *x];
 		}
 	}
+	if (*p > 1) *p = 1.0;
+	if ( *p < 0 ) *p = db_xmin;
 	if(*logp>0) *p=log(*p);
 	return;
 }
@@ -74,3 +76,4 @@ double C_dhyper_logVal(int x, int w, int b, int n, int logp, double *logVal){
 	}
 	return(result);
 }
+

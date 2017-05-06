@@ -3,10 +3,11 @@
 #minghui.wang@mssm.edu
 #
 plot.msets=function(x,Layout=c('circular','landscape'),degree=NULL,keep.empty.intersections=TRUE,
-	sort.by=c('set','size','degree','p-value'),ylim=NULL,
+	sort.by=c('set','size','degree','p-value'),min.intersection.size=0,max.intersection.size=Inf,ylim=NULL,
 	log.scale=FALSE,x.pos=c(0.05,0.95),y.pos=c(0.025,0.975),yfrac=0.8,color.scale.pos=c(0.85, 0.9),legend.pos=c(0.85,0.25),legend.col=2,legend.text.cex=1,
 	color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),color.on='#2EFE64',color.off='#EEEEEE',
-	show.overlap.size=TRUE, show.set.size=TRUE,	track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},...){
+	show.overlap.size=TRUE, show.set.size=TRUE,	track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},pos.size=0.005,
+	new.gridPage=TRUE,minMinusLog10PValue=0,maxMinusLog10PValue=NULL,...){
 #keep.empty.intersections, whether to retain empty intersections in the plot
 	Layout <- match.arg(Layout)
 	if(is.character(color.scale.pos)){
@@ -18,22 +19,22 @@ plot.msets=function(x,Layout=c('circular','landscape'),degree=NULL,keep.empty.in
 	}
 	sort.by = match.arg(sort.by)
 	if(Layout=='circular'){
-		return(plot.msets.circular(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,
-		sort.by=sort.by,ylim=ylim,log.scale=log.scale,color.scale.pos=color.scale.pos,legend.pos=legend.pos,
+		return(plot.msets.circular(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,
+		min.intersection.size=min.intersection.size,max.intersection.size=max.intersection.size,ylim=ylim,log.scale=log.scale,color.scale.pos=color.scale.pos,legend.pos=legend.pos,
 		legend.col=legend.col,legend.text.cex=legend.text.cex,color.scale.cex=color.scale.cex,
 		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.overlap.size=show.overlap.size,
-		track.area.range=track.area.range,bar.area.range=bar.area.range,origin=origin,...))
+		track.area.range=track.area.range,bar.area.range=bar.area.range,origin=origin,pos.size=pos.size,new.gridPage=new.gridPage,minMinusLog10PValue=minMinusLog10PValue,maxMinusLog10PValue=maxMinusLog10PValue,...))
 	}else if(Layout=='landscape'){
-		return(plot.msets.landscape(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,
-		sort.by=sort.by,ylim=ylim,log.scale=log.scale,x.pos=x.pos,y.pos=y.pos,yfrac=yfrac,color.scale.pos=color.scale.pos,color.scale.cex=color.scale.cex,
-		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.set.size=show.set.size,...))
+		return(plot.msets.landscape(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,
+		min.intersection.size=min.intersection.size,max.intersection.size=max.intersection.size,ylim=ylim,log.scale=log.scale,x.pos=x.pos,y.pos=y.pos,yfrac=yfrac,color.scale.pos=color.scale.pos,color.scale.cex=color.scale.cex,
+		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.set.size=show.set.size,new.gridPage=new.gridPage,minMinusLog10PValue=minMinusLog10PValue,maxMinusLog10PValue=maxMinusLog10PValue,...))
 	}else{
 		stop('Invalid Layout\n')
 	}
 }
-plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),ylim=NULL,
+plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),min.intersection.size=0,max.intersection.size=Inf,ylim=NULL,
 	log.scale=FALSE,x.pos=c(0.05,1),y.pos=c(0,1),yfrac=0.8,color.scale.pos=c(0.85, 0.9),color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),
-	color.on='#2EFE64',color.off='#EEEEEE',show.set.size=TRUE,...){
+	color.on='#2EFE64',color.off='#EEEEEE',show.set.size=TRUE,new.gridPage=TRUE,minMinusLog10PValue=0,maxMinusLog10PValue=NULL,...){
 	#
 	sort.by = match.arg(sort.by)
 	Args=list(...)
@@ -46,7 +47,7 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 		heatmapColor = Args$heatmapColor
 	}
 	nColors=length(heatmapColor)-1
-	params=getPlotParams(x,nColors,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,ylim=ylim,log.scale=log.scale,Layout='landscape')
+	params=getPlotParams(x,nColors,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,min.intersection.size=min.intersection.size,max.intersection.size=max.intersection.size,ylim=ylim,log.scale=log.scale,Layout='landscape',minMinusLog10PValue=minMinusLog10PValue,maxMinusLog10PValue=maxMinusLog10PValue)
 	ylabel=params$ylabel
 	ylabel0=params$ylabel0
 	ylim=params$ylim
@@ -62,7 +63,7 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 
 	#start plotting
 	#start a canvas
-	grid.newpage()
+	if(new.gridPage) grid.newpage()
 	vp <- viewport(x=0.5,y=y.pos[1]+(y.pos[2]-y.pos[1])/2, width=1, height=y.pos[2]-y.pos[1])
 	pushViewport(vp)
 	if(nSet==1){
@@ -132,8 +133,8 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 		for(i in 2:length(heatmapColor)){
 			grid.polygon(c((i-1)*wc,i*wc,i*wc,(i-1)*wc),c(0.45,0.45,0.7,0.7),gp=gpar(fill=heatmapColor[i],col=NA))
 		}
-		t1=0 #floor(min(mlogp,na.rm=T));
-		t2=ceiling(max(mlogp,na.rm=T))
+		t1=params$minMinusLog10PValue #0 #floor(min(mlogp,na.rm=T));
+		t2=params$maxMinusLog10PValue #ceiling(max(mlogp,na.rm=T))
 		grid.text(t1,0,0.3,just=c('center','top'),gp=gpar(cex=color.scale.cex))
 		grid.lines(x = c(wc, wc),y = c(0.45, 0.35))
 		grid.text(t2,1,0.3,just=c('center','top'),gp=gpar(cex=color.scale.cex))
@@ -171,10 +172,11 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 	upViewport()
 	return(invisible())
 }
-plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),
+plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),min.intersection.size=0,max.intersection.size=Inf,
 	ylim=NULL,log.scale=FALSE,color.scale.pos=c(0.85, 0.9), legend.pos=c(0.85,0.25),legend.col=2,legend.text.cex=1,
 	color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),color.on='#2EFE64',color.off='#EEEEEE',
-	show.overlap.size=TRUE,track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},...){
+	show.overlap.size=TRUE,track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},
+	pos.size=0.005,new.gridPage=TRUE,minMinusLog10PValue=0,maxMinusLog10PValue=NULL,...){
 	#
 	if(is.character(legend.pos)){
 		legend.pos <- legend.pos[1]
@@ -193,7 +195,7 @@ plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by
 		heatmapColor = Args$heatmapColor
 	}
 	nColors=length(heatmapColor)-1
-	params=getPlotParams(x,nColors,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,ylim=ylim,log.scale=log.scale)
+	params=getPlotParams(x,nColors,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,min.intersection.size=min.intersection.size,max.intersection.size=max.intersection.size,ylim=ylim,log.scale=log.scale,minMinusLog10PValue=minMinusLog10PValue,maxMinusLog10PValue=maxMinusLog10PValue)
 	ylim=params$ylim
 	otab=params$otab
 	otab[otab>ylim[2]]=ylim[2]
@@ -221,7 +223,7 @@ plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by
 	gap.between.track=ifelse(is.null(Args$gap.between.track),0.1,Args$gap.between.track) #ratio of gap width over track width
 
 	#start a canvas
-	grid.newpage()
+	if(new.gridPage) grid.newpage()
 
 	#Plot tracks
 	
@@ -259,7 +261,7 @@ plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by
 		grid.polygon(pos.x, pos.y,gp=gpar(fill = heatmapColor[cid[i]],col=1)) #bar height is proportional to the intersection size
 		#text intersection size
 		if(show.overlap.size==TRUE){
-			XY3=sapply(seq(degreeStart[i],degreeEnd[i]-degree.gap,length.out=4), function(deg) getXY(origin,width.sets+0.005+bar.width.unit*otab[i],deg))
+			XY3=sapply(seq(degreeStart[i],degreeEnd[i]-degree.gap,length.out=4), function(deg) getXY(origin,width.sets+pos.size+bar.width.unit*otab[i],deg))
 			grid.text(otab0[i],mean(XY3[1,]),mean(XY3[2,]),rot=degreeStart[i]*radial2deg,just='left',gp=gpar(cex=cex))
 		}
 	}
@@ -301,8 +303,8 @@ plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by
 		for(i in 2:length(heatmapColor)){
 			grid.polygon(c((i-1)*wc,i*wc,i*wc,(i-1)*wc),c(0.45,0.45,0.7,0.7),gp=gpar(fill=heatmapColor[i],col=NA))
 		}
-		t1=0 #floor(min(mlogp,na.rm=T));
-		t2=ceiling(max(mlogp,na.rm=T))
+		t1=params$minMinusLog10PValue #0 #floor(min(mlogp,na.rm=T));
+		t2=params$maxMinusLog10PValue #ceiling(max(mlogp,na.rm=T))
 		grid.text(t1,0,0.3,just=c('center','top'),gp=gpar(cex=color.scale.cex))
 		grid.lines(x = c(wc, wc),y = c(0.45, 0.35))
 		grid.text(t2,1,0.3,just=c('center','top'),gp=gpar(cex=color.scale.cex))
@@ -355,7 +357,7 @@ getXY=function(origin,radius,degree){
 	Y=radius*sin(degree)
 	origin+c(X,Y)
 }
-getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),ylim=NULL,log.scale=FALSE,Layout=c('circular','landscape')){
+getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),min.intersection.size=0,max.intersection.size=Inf,ylim=NULL,log.scale=FALSE,Layout=c('circular','landscape'),minMinusLog10PValue=0,maxMinusLog10PValue=NULL){
 	Layout=match.arg(Layout)
 	sort.by = match.arg(sort.by)
 	otab=x$overlap.sizes
@@ -378,8 +380,10 @@ getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,so
 		otab.kept=otab>0
 		otab=otab[otab.kept]
 	}else{
-		otab.kept=rep(T,length(otab))
+		otab.kept=rep(TRUE,length(otab))
 	}
+	otab=otab[otab >= min.intersection.size] #this option was originally proposed by Maxime Borry
+	otab=otab[otab <= max.intersection.size]
 	if(!is.null(degree)){
 		kpt=sapply(names(otab),function(d) countCharOccurrences('1',d)) %in% degree #sapply(strsplit(names(otab),''),function(d) sum(d == '1') %in% degree)
 		if(sum(kpt)<2) stop('Too few items left for plotting after applying degree filter\n')
@@ -390,7 +394,7 @@ getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,so
 	if(is.null(ylim)){
 		ylabel=axisTicks(c(0,max(otab0,na.rm=T)),log=FALSE) #for landscape layout
 		ylim=c(0,max(otab,na.rm=T))
-		if(Layout=='landscape') ylim[2]=max(ylabel)
+		if(Layout=='landscape' & (ylim[2]-max(ylabel))/(ylabel[2]-ylabel[1])>0.5) {ylabel=c(ylabel,ylabel[length(ylabel)]+ylabel[2]-ylabel[1]);ylim[2]=ylabel[length(ylabel)]}
 	}else{
 		ylabel=axisTicks(ylim[1:2],log=FALSE)
 	}
@@ -410,12 +414,14 @@ getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,so
 		mlogp[is.na(mlogp)]=1.0e-10
 		mlogp=mlogp[otab.order]
 		mlogp=mlogp[otab.kept]
-		mlogp[mlogp == Inf] = max(320,mlogp[mlogp < Inf],na.rm=T)
-		cid=ceiling(nColors*mlogp/max(c(mlogp,1e-10),na.rm=T))
+		mlogp[mlogp == Inf] = max(320,mlogp[mlogp < Inf],na.rm=TRUE)
+		if(is.null(maxMinusLog10PValue)) maxMinusLog10PValue=max(c(mlogp,1e-10),na.rm=TRUE)
+		mlogp[mlogp>maxMinusLog10PValue]=maxMinusLog10PValue
+		cid=ceiling(nColors*(mlogp-minMinusLog10PValue)/(maxMinusLog10PValue-minMinusLog10PValue))
 		cid[cid<1]=1
 		if(all(is.na(mlogp))) mlogp=NULL
 	}
-	return(list(otab=otab,otab0=otab0,cid=cid,mlogp=mlogp,ylim=ylim,ylabel=ylabel,ylabel0=ylabel0))
+	return(list(otab=otab,otab0=otab0,cid=cid,mlogp=mlogp,ylim=ylim,ylabel=ylabel,ylabel0=ylabel0,minMinusLog10PValue=minMinusLog10PValue,maxMinusLog10PValue=maxMinusLog10PValue))
 }
 axisLen=function(Max,n.ticks=5){
 	u=ceiling(Max/n.ticks)

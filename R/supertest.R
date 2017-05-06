@@ -64,7 +64,7 @@ summary.msets=function(object, degree=NULL, ...){
 	Elements=sapply(Barcode,function(d){
 		id=which(strsplit(d,'')[[1]]=='1')
 		od=sapply(bc,function(b) ifelse(all(b[id]=='1'),TRUE,FALSE))
-		paste(el[od,1],collapse=', ')
+		paste(sort(el[od,1]),collapse=', ')
 	})
 	if(is.null(object$n)){
 		res$Table=data.frame(Intersections=deBarcode(Barcode,object$set.names),Degree=odegree,Observed.Overlap=otab,Elements=Elements,stringsAsFactors=FALSE)

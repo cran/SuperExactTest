@@ -15,6 +15,9 @@ MSET(x,n,lower.tail=TRUE,log.p=FALSE)
 	\code{P[overlap >= m]}, where \code{m} is the number of elements overlap between all sets.}
  \item{log.p}{logical; if TRUE, probability p is given as log(p).}
 }
+\details{
+This function implements an efficient statistical test for multi-set intersections. The algorithm behind this function was described in Wang et al 2015.
+}
 \value{
 A list with the following elements:
  \item{intersects}{a vector of intersect items.}
@@ -25,13 +28,13 @@ A list with the following elements:
 Minghui Wang <minghui.wang@mssm.edu>, Bin Zhang <bin.zhang@mssm.edu>
 }
 \references{
-Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} (In press).
+Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} 5: 16923.
 }
 \seealso{\code{\link{supertest}}, \code{\link{cpsets}}, \code{\link{dpsets}}}
 \examples{
-##not run###
-#fake data
-#x=list(S1=letters[1:20],S2=letters[10:26],S3=sample(letters,10),
-# S4=sample(letters,10))
-#MSET(x,26,FALSE)
+\dontrun{
+#set up fake data
+x=list(S1=letters[1:20], S2=letters[10:26], S3=sample(letters,10), S4=sample(letters,10))
+MSET(x, 26, FALSE)
+}
 }

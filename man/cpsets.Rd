@@ -27,13 +27,14 @@ cpsets(x,L,n,lower.tail=TRUE,log.p=FALSE,
 Minghui Wang <minghui.wang@mssm.edu>, Bin Zhang <bin.zhang@mssm.edu>
 }
 \references{
-Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} (In press).
+Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} 5: 16923.
 }
-\seealso{\code{\link{supertest}}, \code{\link{MSET}}}
+\seealso{\code{\link{supertest}}, \code{\link{MSET}}, \code{\link{cpdiff}}, \code{\link{dpdiff}}}
 \examples{
-##not run###
-#fake data
-#n=500; A=260; B=320; C=430; D=300; x=170
-#(d=dpsets(x,c(A,B,C,D),n))
-#(p=cpsets(x,c(A,B,C,D),n,lower.tail=FALSE))
+\dontrun{
+#set up fake data
+n=500; A=260; B=320; C=430; D=300; x=170
+(d=dpsets(x,c(A,B,C,D),n))
+(p=cpsets(x,c(A,B,C,D),n,lower.tail=FALSE))
+}
 }

@@ -7,7 +7,9 @@
 }
 \usage{
 \method{plot}{msets}(x, Layout=c('circular','landscape'), degree=NULL,
-	keep.empty.intersections=TRUE, sort.by=c('set','size','degree','p-value'),
+	keep.empty.intersections=TRUE,
+	sort.by=c('set','size','degree','p-value'),
+	min.intersection.size=0, max.intersection.size=Inf,
 	ylim=NULL, log.scale=FALSE, x.pos=c(0.05,0.95),
 	y.pos=c(0.025,0.975), yfrac=0.8, color.scale.pos=c(0.85, 0.9), 
 	legend.pos=c(0.85,0.25), legend.col=2, legend.text.cex=1, color.scale.cex=1, 
@@ -15,13 +17,16 @@
 	color.on='#2EFE64', color.off='#EEEEEE', show.overlap.size=TRUE,
 	show.set.size=TRUE, track.area.range=0.3, bar.area.range=0.2,
 	origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},
-	...)
+	pos.size=0.005, new.gridPage=TRUE, minMinusLog10PValue=0,
+	maxMinusLog10PValue=NULL, ...)
 }
 \arguments{
  \item{x}{a \code{msets} object.} 
  \item{Layout}{layout for plotting.}
  \item{degree}{a vector of intersection degrees for plotting. E.g., when \code{degree=c(2:3)}, only those intersections involving two or three sets will be plotted. By default, \code{degree=NULL}, all possible intersections are plotted.}
  \item{keep.empty.intersections}{logical; if \code{FALSE}, empty intersection(s) will be discarded to save plotting space.}
+ \item{min.intersection.size}{Minimum size of an intersection to be plotted.}
+ \item{max.intersection.size}{Maximum size of an intersection to be plotted.}
  \item{sort.by}{how to sort intersections. It is one of "\code{set}", "\code{size}", "\code{degree}", and "\code{p-value}".}
  \item{ylim}{the limits c(y1, y2) of plotting overlap size.}
  \item{log.scale}{logical; whether to plot with log transformed intersection sizes.}
@@ -41,7 +46,11 @@
  \item{track.area.range}{the magnitude of track area from origin in the \code{circular} layout.}
  \item{bar.area.range}{the magnitude of bar area from edge of the track area in the \code{circular} layout. The sum of \code{track.area.range} and \code{track.area.range} should not be larger than 0.5.}
  \item{origin}{the origin coordinates (0 to 1) in the \code{circular} layout.}
- \item{...}{additional arguments for plot function, including \code{heatmapColor} (a vector of heat colors), \code{cex} (scale of text font size), \code{phantom.traks} (number of phantom trakcs in the middle in the \code{circular} layout, default 2), \code{gap.within.track} (ratio of gap width over block width on the same track, default 0.1), and \code{gap.between.track} (ratio of gap width over track width, default 0.1). Not fully implemented.}
+ \item{pos.size}{position offset when plotting the set size for \code{circular} Layout.}
+ \item{new.gridPage}{logic; whether to start a new grid page. Set \code{FALSE} to allow for customized arrangement of the grid layout.}
+ \item{minMinusLog10PValue}{numeric; minimum minus log10 P value for capping the scale of color map. Default 0.}
+ \item{maxMinusLog10PValue}{numeric; maximum minus log10 P value for capping the scale of color map. Default maximum from the data.}
+ \item{...}{additional arguments for plot function, including \code{heatmapColor} (a vector of customized heat colors), \code{cex} (scale of text font size), \code{phantom.traks} (number of phantom trakcs in the middle in the \code{circular} layout, default 2), \code{gap.within.track} (ratio of gap width over block width on the same track, default 0.1), and \code{gap.between.track} (ratio of gap width over track width, default 0.1). Not fully implemented.}
 }
 \details{
  The plot canvas has coordinates 0~1 for both x and y axes.
@@ -53,14 +62,14 @@ No return.
 Minghui Wang <minghui.wang@mssm.edu>, Bin Zhang <bin.zhang@mssm.edu>
 }
 \references{
-Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} (In press).
+Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} 5: 16923.
 }
 \examples{
-##not run###
-#fake data
-#x=list(S1=letters[1:20],S2=letters[10:26],S3=sample(letters,10),
-# S4=sample(letters,10))
-#obj=supertest(x,n=26)
-#plot(obj)
+\dontrun{
+#set up fake data
+x=list(S1=letters[1:20], S2=letters[10:26], S3=sample(letters,10), S4=sample(letters,10))
+obj=supertest(x,n=26)
+plot(obj)
+}
 }
 \seealso{\code{\link{msets}}}

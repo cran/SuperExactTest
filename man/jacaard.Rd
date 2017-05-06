@@ -18,9 +18,9 @@ A matrix of pairwise Jaccard indices.
 Minghui Wang <minghui.wang@mssm.edu>
 }
 \examples{
-##not run###
-#fake data
-#x=list(S1=letters[1:20],S2=letters[10:26],S3=sample(letters,10),
-# S4=sample(letters,10))
-#jaccard(x)
+\dontrun{
+#set up fake data
+x=list(S1=letters[1:20], S2=letters[10:26], S3=sample(letters,10), S4=sample(letters,10))
+jaccard(x)
+}
 }

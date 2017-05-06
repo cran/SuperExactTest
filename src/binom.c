@@ -1,8 +1,3 @@
-#include <R.h>
-#include <Rmath.h>
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 #include "mvhyper.h"
 
 double C_logChoose(int n, int k){

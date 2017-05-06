@@ -22,7 +22,7 @@ The six clinical traits are:
 6) OB (obesity, obesity related traits).
 }
 \references{
-Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} (In press).
+Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} 5: 16923.
 }
 \keyword{datasets}
 \seealso{\code{\link{supertest}}}

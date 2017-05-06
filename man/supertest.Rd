@@ -1,7 +1,6 @@
 \name{supertest}
 \alias{supertest}
 \alias{supertest,list-method}
-\docType{package}
 \title{Calculate Intersections Among Multiple Sets and Perform Statistical Tests}
 \description{
   This function calculates intersection sizes among multiple sets and performs statistical tests of the intersections.
@@ -17,20 +16,24 @@ supertest(x, n=NULL, degree=NULL, ...)
 }
 \details{
 This function calculates intersection sizes between multiple sets and, if background population size \code{n} is specified, performs statistical tests of the intersections.
+For a brief introduction of using this package, please see \code{vignette("set_html")}.
 }
 \value{
-An object of class \code{msets}.
+An object of class \code{\link{msets}}.
 }
 \author{
 Minghui Wang <minghui.wang@mssm.edu>, Bin Zhang <bin.zhang@mssm.edu>
 }
 \references{
-Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} (In press).
-}\seealso{\code{\link{msets}}, \code{\link{MSET}}, \code{\link{Cancer}}, \code{\link{cpsets}}, \code{\link{dpsets}}}
+Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} 5: 16923.
+}
+\seealso{\code{\link{msets}}, \code{\link{MSET}}, \code{\link{Cancer}}, \code{\link{cpsets}}, \code{\link{dpsets}}}
 \examples{
+\dontrun{
 #Analyze the cancer gene sets
 data(Cancer)
 Result=supertest(Cancer, n=20687)
 summary(Result)
 plot(Result,degree=2:7,sort.by='size')
+}
 }

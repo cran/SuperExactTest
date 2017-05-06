@@ -23,7 +23,7 @@ enumerateIntersecSizes=function(x,degree=NULL){
 	exc2incIntersect(otab)
 }
 #list all possible intersections
-intersectElements=function(x){
+intersectElements=function(x,mutual.exclusive=TRUE){
 #return Venn diagram entry sizes
 #x: a list of sets
 	if(!is.list(x)) stop('Input x must be list\n')
@@ -34,7 +34,13 @@ intersectElements=function(x){
 	for(i in 1:nL){
 		barcodes=paste(barcodes,ifelse(allE %in% x[[i]],'1','0'),sep='')
 	}
-	data.frame(Entry=allE,barcode=barcodes,stringsAsFactors=FALSE)
+	Res=data.frame(Entry=allE,barcode=barcodes,stringsAsFactors=FALSE)
+	if(mutual.exclusive) return(Res)
+	Res=do.call(rbind,lapply(split(Res,Res$barcode),function(z){
+		s=barcodeSuperset(z$barcode[1])
+		cbind(Entry=rep(z$Entry,length(s)),barcode=rep(s,each=nrow(z)))
+	}))
+	data.frame(Res,stringsAsFactors=FALSE)
 }
 #enumerate all overlap and non-overlap set sizes
 exclusiveIntersect0=function(x){
@@ -62,12 +68,12 @@ exc2incIntersect=function(x){
 	otab
 }
 #reverse barcode
-deBarcode <- function(barcode,grp){
-	sapply(barcode,function(b){
-		s=grp[strsplit(b,'')[[1]] == '1']
-		s=paste(s,collapse=' & ')
+deBarcode <- function(barcode,setnames,collapse=' & '){
+	sapply(barcode,function(b,setnames,collapse=' & '){
+		s=setnames[strsplit(b,'')[[1]] == '1']
+		s=paste(s,collapse=collapse)
 		s
-	})
+	},setnames=setnames,collapse=collapse)
 }
 #compute intersection sizes for given overlap degree
 incIntersect=function(x,degree=NULL){
@@ -124,4 +130,18 @@ union.list=function(x){
 		u=unique(c(u,as.vector(x[[i]])))
 	}
 	u
+}
+barcodeSuperset=function(x){
+	x1=strsplit(x,'')[[1]]
+	ii=which(x1 == '1')
+	if( length(ii) <= 1) return(x)
+	b=cbind(x1)
+	for(i in ii){
+		b1=b
+		b1[i,]='0'
+		b=cbind(b,b1)
+	}
+	colnames(b)=NULL
+	b=b[,- ncol(b),drop=FALSE]
+	sort(apply(b,2,paste,collapse=''))
 }

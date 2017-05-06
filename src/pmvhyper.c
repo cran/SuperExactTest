@@ -26,7 +26,9 @@ logp:  return log probability
 	}
 	if(*x == 0){
 		C_dmvhyper_logVal(x, nL, L, n, p, &i0, logVal);
-		if(*lower == 0) *p = 1.0 - *p;
+		if (*lower == 0) *p = 1.0 - *p;
+		if (*p > 1) *p = 1.0;
+		if ( *p < 0 ) *p = db_xmin;
 		if(*logp>0) *p=log(*p);
 		return;
 	}
@@ -63,6 +65,8 @@ logp:  return log probability
 		}
 		if(*lower == 0) *p = 1.0 - *p;
 	}
+	if (*p > 1) *p = 1.0;
+	if ( *p < 0 ) *p = db_xmin;
 	if(*logp > 0) *p = log(*p);
 	return;
 }

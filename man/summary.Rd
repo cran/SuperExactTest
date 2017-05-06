@@ -28,14 +28,14 @@ A list:
 Minghui Wang <minghui.wang@mssm.edu>, Bin Zhang <bin.zhang@mssm.edu>
 }
 \references{
-Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} (In press).
+Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} 5: 16923.
 }
 \examples{
-##not run###
-#fake data
-#x=list(S1=letters[1:20],S2=letters[10:26],S3=sample(letters,10),
-# S4=sample(letters,10))
-#obj=supertest(x,n=26)
-#summary(obj)
+\dontrun{
+#set up fake data
+x=list(S1=letters[1:20], S2=letters[10:26], S3=sample(letters,10), S4=sample(letters,10))
+obj=supertest(x,n=26)
+summary(obj)
+}
 }
 \seealso{\code{\link{msets}}}
