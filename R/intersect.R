@@ -12,7 +12,7 @@ jaccard=function(x){
 	colnames(Mat)=rownames(Mat)=names(x)
 	diag(Mat)=1
 	for(i in 1:(nL-1)){
-		for(j in (i+1):nL) Mat[i,j]=Mat[j,i]=sum(x[[i]] %in% x[[j]])/length(c(x[[i]],x[[j]]))
+		for(j in (i+1):nL) Mat[i,j]=Mat[j,i]=sum(x[[i]] %in% x[[j]])/length(union(x[[i]],x[[j]]))
 	}
 	Mat
 }
