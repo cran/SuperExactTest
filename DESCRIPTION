@@ -1,8 +1,8 @@
 Package: SuperExactTest
 Type: Package
 Title: Exact Test and Visualization of Multi-Set Intersections
-Version: 0.99.4
-Date: 2017-06-14
+Version: 1.0.0
+Date: 2018-02-07
 Author: Minghui Wang, Yongzhong Zhao and Bin Zhang
 Maintainer: Minghui Wang <minghui.wang@mssm.edu>
 Contact: Minghui Wang <minghui.wang@mssm.edu>, Bin Zhang
@@ -13,6 +13,6 @@ Depends: grid (>= 3.1.0), methods, R (>= 3.1.0)
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2017-06-15 14:18:16 UTC; Minghui
+Packaged: 2018-02-07 21:34:16 UTC; Minghui
 Repository: CRAN
-Date/Publication: 2017-06-15 14:49:51 UTC
+Date/Publication: 2018-02-07 22:02:06 UTC

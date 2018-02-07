@@ -6,7 +6,7 @@ plot.msets=function(x,Layout=c('circular','landscape'),degree=NULL,keep.empty.in
 	sort.by=c('set','size','degree','p-value'),min.intersection.size=0,max.intersection.size=Inf,ylim=NULL,
 	log.scale=FALSE,x.pos=c(0.05,0.95),y.pos=c(0.025,0.975),yfrac=0.8,color.scale.pos=c(0.85, 0.9),legend.pos=c(0.85,0.25),legend.col=2,legend.text.cex=1,
 	color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),color.on='#2EFE64',color.off='#EEEEEE',
-	show.overlap.size=TRUE, show.set.size=TRUE,	track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},pos.size=0.005,
+	show.overlap.size=TRUE, show.set.size=TRUE,	overlap.size.cex=0.9, track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},pos.size=0.005,
 	new.gridPage=TRUE,minMinusLog10PValue=0,maxMinusLog10PValue=NULL,...){
 #keep.empty.intersections, whether to retain empty intersections in the plot
 	Layout <- match.arg(Layout)
@@ -22,19 +22,20 @@ plot.msets=function(x,Layout=c('circular','landscape'),degree=NULL,keep.empty.in
 		return(plot.msets.circular(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,
 		min.intersection.size=min.intersection.size,max.intersection.size=max.intersection.size,ylim=ylim,log.scale=log.scale,color.scale.pos=color.scale.pos,legend.pos=legend.pos,
 		legend.col=legend.col,legend.text.cex=legend.text.cex,color.scale.cex=color.scale.cex,
-		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.overlap.size=show.overlap.size,
+		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.overlap.size=show.overlap.size,overlap.size.cex=overlap.size.cex,
 		track.area.range=track.area.range,bar.area.range=bar.area.range,origin=origin,pos.size=pos.size,new.gridPage=new.gridPage,minMinusLog10PValue=minMinusLog10PValue,maxMinusLog10PValue=maxMinusLog10PValue,...))
 	}else if(Layout=='landscape'){
 		return(plot.msets.landscape(x=x,degree=degree,keep.empty.intersections=keep.empty.intersections,sort.by=sort.by,
 		min.intersection.size=min.intersection.size,max.intersection.size=max.intersection.size,ylim=ylim,log.scale=log.scale,x.pos=x.pos,y.pos=y.pos,yfrac=yfrac,color.scale.pos=color.scale.pos,color.scale.cex=color.scale.cex,
-		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.set.size=show.set.size,new.gridPage=new.gridPage,minMinusLog10PValue=minMinusLog10PValue,maxMinusLog10PValue=maxMinusLog10PValue,...))
+		color.scale.title=color.scale.title,color.on=color.on,color.off=color.off,show.overlap.size=show.overlap.size,show.set.size=show.set.size,overlap.size.cex=overlap.size.cex,
+		new.gridPage=new.gridPage,minMinusLog10PValue=minMinusLog10PValue,maxMinusLog10PValue=maxMinusLog10PValue,...))
 	}else{
 		stop('Invalid Layout\n')
 	}
 }
 plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),min.intersection.size=0,max.intersection.size=Inf,ylim=NULL,
 	log.scale=FALSE,x.pos=c(0.05,1),y.pos=c(0,1),yfrac=0.8,color.scale.pos=c(0.85, 0.9),color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),
-	color.on='#2EFE64',color.off='#EEEEEE',show.set.size=TRUE,new.gridPage=TRUE,minMinusLog10PValue=0,maxMinusLog10PValue=NULL,...){
+	color.on='#2EFE64',color.off='#EEEEEE',show.overlap.size=FALSE,show.set.size=TRUE,overlap.size.cex=0.9,new.gridPage=TRUE,minMinusLog10PValue=0,maxMinusLog10PValue=NULL,...){
 	#
 	sort.by = match.arg(sort.by)
 	Args=list(...)
@@ -92,8 +93,8 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 	#plot intersections
 	for(i in 1:nO){
 		posx=w*(i-1)+w/2
-	#	grid.text(otab0[i],posx,0.03,rot=45,gp=gpar(cex=cex),just=c('right','top')) #size
 		grid.rect(x=posx,y=0.0,width=w*0.8,height=h*otab[i],just=c('center','bottom'),gp=gpar(fill=heatmapColor[cid[i]]))
+		if(show.overlap.size) grid.text(otab0[i],posx,h*otab[i]+as.numeric(convertUnit(stringHeight('o'), "npc", "y"))/3,gp=gpar(cex=overlap.size.cex),vjust=0)
 	}
 	upViewport()
 
@@ -175,7 +176,7 @@ plot.msets.landscape=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.b
 plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by=c('set','size','degree','p-value'),min.intersection.size=0,max.intersection.size=Inf,
 	ylim=NULL,log.scale=FALSE,color.scale.pos=c(0.85, 0.9), legend.pos=c(0.85,0.25),legend.col=2,legend.text.cex=1,
 	color.scale.cex=1,color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),color.on='#2EFE64',color.off='#EEEEEE',
-	show.overlap.size=TRUE,track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},
+	show.overlap.size=TRUE,overlap.size.cex=0.9,track.area.range=0.3,bar.area.range=0.2,origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},
 	pos.size=0.005,new.gridPage=TRUE,minMinusLog10PValue=0,maxMinusLog10PValue=NULL,...){
 	#
 	if(is.character(legend.pos)){
@@ -262,7 +263,7 @@ plot.msets.circular=function(x,degree=NULL,keep.empty.intersections=TRUE,sort.by
 		#text intersection size
 		if(show.overlap.size==TRUE){
 			XY3=sapply(seq(degreeStart[i],degreeEnd[i]-degree.gap,length.out=4), function(deg) getXY(origin,width.sets+pos.size+bar.width.unit*otab[i],deg))
-			grid.text(otab0[i],mean(XY3[1,]),mean(XY3[2,]),rot=degreeStart[i]*radial2deg,just='left',gp=gpar(cex=cex))
+			grid.text(otab0[i],mean(XY3[1,]),mean(XY3[2,]),rot=degreeStart[i]*radial2deg,just='left',gp=gpar(cex=overlap.size.cex))
 		}
 	}
 	#track number (numbering the legends)
@@ -415,7 +416,7 @@ getPlotParams=function(x,nColors=50,degree=NULL,keep.empty.intersections=TRUE,so
 		mlogp=mlogp[otab.order]
 		mlogp=mlogp[otab.kept]
 		mlogp[mlogp == Inf] = max(320,mlogp[mlogp < Inf],na.rm=TRUE)
-		if(is.null(maxMinusLog10PValue)) maxMinusLog10PValue=max(c(mlogp,1e-10),na.rm=TRUE)
+		if(is.null(maxMinusLog10PValue)) maxMinusLog10PValue=ceiling(max(c(mlogp,1e-10),na.rm=TRUE))
 		mlogp[mlogp>maxMinusLog10PValue]=maxMinusLog10PValue
 		cid=ceiling(nColors*(mlogp-minMinusLog10PValue)/(maxMinusLog10PValue-minMinusLog10PValue))
 		cid[cid<1]=1

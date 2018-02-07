@@ -42,7 +42,7 @@ res=supertest(cis.eqtls, n=total)
 plot(res, sort.by="size")
 
 ## ----fig2, fig.width = 9, fig.height = 4, fig.cap = "A bar chart illustrating all possible intersections among *cis*-eQTL gene sets in a matrix layout."----
-plot(res, Layout="landscape", degree=2:4, sort.by="size")
+plot(res, Layout="landscape", degree=2:4, sort.by="size", y.pos=c(0.025,0.95))
 
 ## ------------------------------------------------------------------------
 summary(res)

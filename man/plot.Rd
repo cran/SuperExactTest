@@ -14,8 +14,9 @@
 	y.pos=c(0.025,0.975), yfrac=0.8, color.scale.pos=c(0.85, 0.9), 
 	legend.pos=c(0.85,0.25), legend.col=2, legend.text.cex=1, color.scale.cex=1, 
 	color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),
-	color.on='#2EFE64', color.off='#EEEEEE', show.overlap.size=TRUE,
-	show.set.size=TRUE, track.area.range=0.3, bar.area.range=0.2,
+	color.on='#2EFE64', color.off='#EEEEEE', 
+	show.overlap.size=TRUE, show.set.size=TRUE,
+	overlap.size.cex=0.9, track.area.range=0.3, bar.area.range=0.2,
 	origin=if(sort.by[1]=='size'){c(0.45,0.5)}else{c(0.5,0.5)},
 	pos.size=0.005, new.gridPage=TRUE, minMinusLog10PValue=0,
 	maxMinusLog10PValue=NULL, ...)
@@ -41,8 +42,9 @@
  \item{color.scale.title}{character or expression; a title for the color scale guide.}
  \item{color.on}{color code; specifying the color for set(s) which are "\code{present}" for an intersection.}
  \item{color.off}{color code; specifying the color for set(s) which are "{absent}" for an intersection.}
- \item{show.overlap.size}{logical; whether to show overlap size in \code{circular} layout.}
- \item{show.set.size}{color code; whether to show set size in \code{landscape} layout.}
+ \item{show.overlap.size}{logical; whether to show overlap size.}
+ \item{show.set.size}{color code; whether to show set size in the \code{landscape} layout.}
+ \item{overlap.size.cex}{numeric; specifying the amount by which overlap size text should be magnified relative to the default.}
  \item{track.area.range}{the magnitude of track area from origin in the \code{circular} layout.}
  \item{bar.area.range}{the magnitude of bar area from edge of the track area in the \code{circular} layout. The sum of \code{track.area.range} and \code{track.area.range} should not be larger than 0.5.}
  \item{origin}{the origin coordinates (0 to 1) in the \code{circular} layout.}
