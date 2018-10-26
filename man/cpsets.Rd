@@ -24,12 +24,12 @@ cpsets(x,L,n,lower.tail=TRUE,log.p=FALSE,
 \code{dpsets} gives the density and \code{cpsets} gives the distribution function.
 }
 \author{
-Minghui Wang <minghui.wang@mssm.edu>, Bin Zhang <bin.zhang@mssm.edu>
+Minghui Wang <minghui.wang@mssm.edu>
 }
 \references{
 Minghui Wang, Yongzhong Zhao, and Bin Zhang (2015). Efficient Test and Visualization of Multi-Set Intersections. \emph{Scientific Reports} 5: 16923.
 }
-\seealso{\code{\link{supertest}}, \code{\link{MSET}}, \code{\link{cpdiff}}, \code{\link{dpdiff}}}
+\seealso{\code{\link{supertest}}, \code{\link{MSET}}}
 \examples{
 \dontrun{
 #set up fake data

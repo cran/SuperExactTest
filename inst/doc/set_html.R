@@ -39,10 +39,10 @@ fit$p.value
 res=supertest(cis.eqtls, n=total)
 
 ## ----fig1, fig.width = 5, fig.height = 5, fig.cap = "A circular plot visualizing all possible intersections and the corresponding statistics amongst *cis*-eQTL gene sets."----
-plot(res, sort.by="size")
+plot(res, sort.by="size", margin=c(2,2,2,2), color.scale.pos=c(0.85,1), legend.pos=c(0.9,0.15))
 
 ## ----fig2, fig.width = 9, fig.height = 4, fig.cap = "A bar chart illustrating all possible intersections among *cis*-eQTL gene sets in a matrix layout."----
-plot(res, Layout="landscape", degree=2:4, sort.by="size", y.pos=c(0.025,0.95))
+plot(res, Layout="landscape", degree=2:4, sort.by="size", margin=c(0.5,5,1,2))
 
 ## ------------------------------------------------------------------------
 summary(res)

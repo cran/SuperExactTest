@@ -11,10 +11,6 @@ export(
 	intersect,
 	plot.msets,
 	union,
-	dpdiff,
-	cpdiff,
-	dpone,
-	cpone,
 	intersectElements,
 	deBarcode
 )
