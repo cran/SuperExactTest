@@ -15,7 +15,7 @@
 	legend.col=2, legend.text.cex=1, color.scale.cex=1, 
 	color.scale.title=expression(paste(-Log[10],'(',italic(P),')')),
 	color.on='#2EFE64', color.off='#EEEEEE', 
-	show.overlap.size=TRUE, show.set.size=TRUE,
+	show.overlap.size=TRUE, show.fold.enrichment=FALSE, show.set.size=TRUE,
 	overlap.size.cex=0.9, track.area.range=0.3, bar.area.range=0.2,
 	new.gridPage=TRUE, minMinusLog10PValue=0,
 	maxMinusLog10PValue=NULL, show.elements=FALSE, ...)
@@ -38,9 +38,10 @@
  \item{legend.text.cex}{numeric; specifying the amount by which legend text should be magnified relative to the default.}
  \item{color.scale.cex}{numeric; specifying the amount by which color scale text should be magnified relative to the default.}
  \item{color.scale.title}{character or expression; a title for the color scale guide.}
- \item{color.on}{color code; specifying the color for set(s) which are "\code{present}" for an intersection.}
+ \item{color.on}{color code; specifying the color for set(s) which are "\code{present}" for an intersection. Can be a vector of colors. When \code{NULL}, a predefined list of colors will be used.}
  \item{color.off}{color code; specifying the color for set(s) which are "{absent}" for an intersection.}
- \item{show.overlap.size}{logical; whether to show overlap size.}
+ \item{show.overlap.size}{logical; whether to show overlap size on top of the bars. This will be set to \code{FALSE} if \code{show.fold.enrichment = TRUE}.}
+ \item{show.fold.enrichment}{logical; whether to show fold enrichment if available rather than overlap size. This will impact \code{show.overlap.size}.}
  \item{show.set.size}{color code; whether to show set size in the \code{landscape} layout.}
  \item{overlap.size.cex}{numeric; specifying the amount by which overlap size text should be magnified relative to the default.}
  \item{track.area.range}{the magnitude of track area from origin in the \code{circular} layout.}
@@ -55,6 +56,7 @@
  The plot canvas has coordinates 0~1 for both x and y axes. Additional optional plot parameters include:
  \itemize{
  \item \code{ylab}, a chracter string of y axis label.
+ \item \code{circle.radii}, radii size of the circles in \code{landscape} Layout. Default 0.5.
  \item \code{heatmapColor}, a vector of customized heat colors.
  \item \code{show.expected.overlap}, whether to show expcted overlap in \code{landscape} Layout. Default 'FALSE'.
  \item \code{expected.overlap.style}, one of c("hatchedBox","horizBar","box"). Default 'hatchedBox'.
@@ -75,6 +77,8 @@
  \item \code{elements.maximum}, maximum number of elements to show.
  \item \code{intersection.size.rotate}, logic, whether to rotate the text of intersection size.
  \item \code{flip.vertical}, logic, whether to flip the bars to downwards in \code{landscape} Layout. Default 'FALSE'.
+ \item \code{title}, figure title. Default NULL.
+ \item \code{cex.title}, scale of title text font size. Default 1.
  }
 }
 \value{
